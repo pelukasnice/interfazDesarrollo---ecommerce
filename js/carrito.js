@@ -1,27 +1,33 @@
-import stock from "./productos";
+import stock from '/js/productos.js';
 
-//CREAMOS LA FUNCION AGREGAR AL CARRITO
 
-let agregarAlCarrito = (frutaId) => {
-    if(frutaId > 0){
-        const encontrado = stock.find(producto => producto.id === parseInt(frutaId))
-        if(typeof encontrado !=='undefined') carritoFrutas.push(encontrado)
-        almacenarCarrito()
+let carritoFrutas = [];
+
+const agregarAlCarrito = (frutaId) => {
+    const encontrado = stock.find(producto => producto.id === frutaId);
+    if (encontrado) {
+        carritoFrutas.push(encontrado);
+        almacenarCarrito();
+        console.log("Producto agregado al carrito.");
+    } else {
+        console.log("Producto no encontrado en el stock.");
     }
-}
+};
 
 const almacenarCarrito = () => {
-    if(carritoFrutas.length > 0){
-        let carritoConvertido = JSON.stringify(carritoFrutas)
-        localStorage.setItem("carritoFrutas", carritoConvertido)
+    if (carritoFrutas.length > 0) {
+        let carritoConvertido = JSON.stringify(carritoFrutas);
+        localStorage.setItem("carritoFrutas", carritoConvertido);
     }
-}
+};
 
 const recuperarCarrito = () => {
-    return JSON.parse(localStorage.getItem("carritoFrutas")) || []
-}
+    return JSON.parse(localStorage.getItem("carritoFrutas")) || [];
+};
 
-const carritoFrutas = recuperarCarrito();
+carritoFrutas = recuperarCarrito();
+
+export { agregarAlCarrito };
 
 
 
